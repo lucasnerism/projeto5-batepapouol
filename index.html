@@ -21,24 +21,33 @@
   </head>
   <body>
     <header>
-      <img src="./recursos/imagens/logo.png" alt="" /><ion-icon
-        name="people"
+      <img src="./recursos/imagens/logo.png" alt="" /><button
         onclick="mostrarMenu()"
-      ></ion-icon>
+        data-test="open-participants"
+      >
+        <ion-icon name="people"></ion-icon>
+      </button>
     </header>
     <main>
+      <div class="tela-login">
+        <img src="./recursos/imagens/logo.png" alt="" />
+        <p></p>
+        <input
+          type="text"
+          placeholder="Digite seu nome"
+          onkeypress="enviarPorEnter(event,'login')"
+          data-test="input-name"
+        />
+        <button onclick="entrarUser()" data-test="send-name">Entrar</button>
+        <div class="carregando escondido">
+          <img src="./recursos/imagens/loading.png" alt="" />
+          <p>Entrando...</p>
+        </div>
+      </div>
       <div class="overlay escondido" onclick="mostrarMenu()">
         <nav>
           <h1>Escolha um contato<br />para enviar mensagem:</h1>
-          <lu class="contato">
-            <li class="ativo" onclick="ativar(this,'contato')">
-              <div><ion-icon name="people"></ion-icon>Todos</div>
-              <ion-icon name="checkmark-outline"></ion-icon>
-            </li>
-            <!--<li onclick="ativar(this)"><ion-icon name="person-circle"></ion-icon>${dados.data[i].nome}</ion-icon>Todos<ion-icon
-                name="checkmark-outline"
-              ></ion-icon></li>-->
-          </lu>
+          <lu class="contato"> </lu>
           <h1>Escolha a visibilidade:</h1>
           <lu class="visibilidade">
             <li
@@ -47,10 +56,10 @@
               data-test="public"
             >
               <div>
-                <ion-icon name="lock-open" data-test="check"></ion-icon>
+                <ion-icon name="lock-open"></ion-icon>
                 <p>Público</p>
               </div>
-              <ion-icon name="checkmark-outline"></ion-icon>
+              <ion-icon name="checkmark-outline" data-test="check"></ion-icon>
             </li>
             <li onclick="ativar(this, 'visibilidade')" data-test="private">
               <div>
@@ -69,16 +78,13 @@
         <input
           type="text"
           placeholder="Escreva aqui..."
-          onkeypress="enviarPorEnter(event)"
+          onkeypress="enviarPorEnter(event, 'msg')"
           data-test="input-message"
         />
         <div class="enviandoPara" data-test="recipient"></div>
       </div>
-      <button data-test="send-message">
-        <ion-icon
-          name="paper-plane-outline"
-          onclick="enviarMensagem()"
-        ></ion-icon>
+      <button onclick="enviarMensagem()" data-test="send-message">
+        <ion-icon name="paper-plane-outline"></ion-icon>
       </button>
     </footer>
     <script

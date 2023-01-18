@@ -5,24 +5,33 @@ let usuario;
 const elemento = document.querySelector('.enviandoPara');
 
 function entrarUser() {
+  user = document.querySelector('.tela-login input').value;
   usuario = {
     name: user
   };
   const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
   promise.then(checkUser);
   promise.catch(falhaLogin);
+  document.querySelector('.tela-login button').style.display = "none";
+  document.querySelector('.tela-login input').style.display = "none";
+  document.querySelector('.carregando').classList.remove("escondido");
 }
 
 function checkUser(dados) {
   checkStatus();
   setInterval(checkStatus, 5000);
+  atualizarLista();
+  setInterval(atualizarLista, 10000);
+  document.querySelector('.tela-login').classList.add('escondido');
 }
 
 function falhaLogin() {
-  user = prompt('Já existe um usuário com esse nome, por favor escolha outro nome');
-  entrarUser();
+  user = document.querySelector('.tela-login input').value;
+  document.querySelector('.tela-login p').innerHTML = 'Já existe um usuário com esse nome, por favor escolha outro nome';
+  document.querySelector('.tela-login button').style.display = "initial";
+  document.querySelector('.tela-login input').style.display = "initial";
+  document.querySelector('.carregando').classList.add("escondido");
 }
-
 
 function checkStatus() {
   axios.post('https://mock-api.driven.com.br/api/v6/uol/status', usuario);
@@ -31,7 +40,6 @@ function checkStatus() {
 function mensagens() {
   const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
   promise.then(atualizarMensagens);
-
 }
 
 function atualizarMensagens(dados) {
@@ -53,7 +61,7 @@ function atualizarMensagens(dados) {
       <span class="user">${dados.data[i].to}: </span>${dados.data[i].text}
     </p>
     </li>`;
-    } else {
+    } else if (dados.data[i].type === 'message') {
       timeline.innerHTML += `<li class="mensagem" data-test="message">
     <p>
       <span class="hora">(${dados.data[i].time}) </span
@@ -67,7 +75,7 @@ function atualizarMensagens(dados) {
 }
 
 function enviarMensagem() {
-  const msg = document.querySelector('input').value;
+  let msg = document.querySelector('footer input').value;
   let mensagem = {
     from: user,
     to: touser,
@@ -77,14 +85,18 @@ function enviarMensagem() {
   const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
   promise.then(mensagens);
   promise.catch(erro);
+  document.querySelector('footer input').value = '';
 }
 
-function enviarPorEnter(event) {
-  let x = event.code;
-  if (x === "Enter") {
+function enviarPorEnter(event, tipo) {
+  let x = event.which;
+  if (x === 13 && tipo === "msg") {
     enviarMensagem();
+  } else if (x === 13 && tipo === "login") {
+    entrarUser();
   }
 }
+
 
 function erro() {
   window.location.reload();
@@ -92,8 +104,13 @@ function erro() {
 
 function mostrarMenu() {
   document.querySelector('.overlay').classList.toggle("escondido");
+
+}
+
+function atualizarLista() {
   const usuarios = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
   usuarios.then(listaUsers);
+  usuarios.catch(erro);
 }
 
 function ativar(esse, tipo) {
@@ -134,7 +151,8 @@ document.querySelector('nav').onclick = function () {
   event.stopPropagation();
 };
 
-user = prompt('Qual o seu nome?');
-entrarUser();
+
+
 mensagens();
+
 setInterval(mensagens, 3000);
