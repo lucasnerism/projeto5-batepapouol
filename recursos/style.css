@@ -22,6 +22,7 @@ footer {
 
 main {
   margin: 106px 0;
+  width: 100vw;
 }
 
 header ion-icon {
@@ -73,6 +74,7 @@ footer ion-icon {
   align-items: center;
   text-align-last: left;
   margin-bottom: 4px;
+  word-break: break-word;
 }
 
 .presenca {
