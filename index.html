@@ -23,18 +23,52 @@
     <header>
       <img src="./recursos/imagens/logo.png" alt="" /><ion-icon
         name="people"
+        onclick="mostrarMenu()"
       ></ion-icon>
     </header>
     <main>
+      <div class="overlay escondido" onclick="mostrarMenu()">
+        <nav>
+          <h1>Escolha um contato<br />para enviar mensagem:</h1>
+          <lu class="contato">
+            <li class="ativo" onclick="ativar(this)">
+              <div><ion-icon name="people"></ion-icon>Todos</div>
+              <ion-icon name="checkmark-outline"></ion-icon>
+            </li>
+            <!--<li onclick="ativar(this)"><ion-icon name="person-circle"></ion-icon>${dados.data[i].nome}</ion-icon>Todos<ion-icon
+                name="checkmark-outline"
+              ></ion-icon></li>-->
+          </lu>
+          <h1>Escolha a visibilidade:</h1>
+          <lu class="visibilidade">
+            <li class="ativo" data-test="public">
+              <div>
+                <ion-icon name="lock-open" data-test="check"></ion-icon>Público
+              </div>
+              <ion-icon name="checkmark-outline"></ion-icon>
+            </li>
+            <li data-test="private">
+              <div>
+                <ion-icon name="lock-open"></ion-icon>
+                <p>Reservadamente</p>
+              </div>
+              <ion-icon name="checkmark-outline" data-test="check"></ion-icon>
+            </li>
+          </lu>
+        </nav>
+      </div>
       <lu> </lu>
     </main>
     <footer>
-      <input
-        type="text"
-        placeholder="Escreva aqui..."
-        onkeypress="enviarPorEnter(event)"
-        data-test="input-message"
-      />
+      <div>
+        <input
+          type="text"
+          placeholder="Escreva aqui..."
+          onkeypress="enviarPorEnter(event)"
+          data-test="input-message"
+        />
+        <div class="enviandoPara" data-test="recipient"></div>
+      </div>
       <button data-test="send-message">
         <ion-icon
           name="paper-plane-outline"

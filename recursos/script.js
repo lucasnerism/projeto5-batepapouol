@@ -2,6 +2,7 @@ let user;
 let touser = 'Todos';
 let typemsg = 'message';
 let usuario;
+const elemento = document.querySelector('.enviandoPara');
 
 function entrarUser() {
   usuario = {
@@ -13,10 +14,8 @@ function entrarUser() {
 }
 
 function checkUser(dados) {
-  if (dados.data === "OK") {
-    checkStatus();
-    setInterval(checkStatus, 5000);
-  }
+  checkStatus();
+  setInterval(checkStatus, 5000);
 }
 
 function falhaLogin() {
@@ -32,20 +31,21 @@ function checkStatus() {
 function mensagens() {
   const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
   promise.then(atualizarMensagens);
+
 }
 
 function atualizarMensagens(dados) {
-  const timeline = document.querySelector('lu');
-
+  const timeline = document.querySelector('main > lu');
+  timeline.innerHTML = "";
   for (let i = 0; i < dados.data.length; i++) {
     if (dados.data[i].type === 'status') {
       timeline.innerHTML += `<li class="mensagem presenca" data-test="message">
           <p>
-            <span class="hora">(${dados.data[i].time}) </span
+            <span class="hora">(${dados.data[i].time})</span
             ><span class="user">${dados.data[i].from} </span>${dados.data[i].text}
           </p>
         </li>`;
-    } else if (dados.data[i].type === 'private_message') {
+    } else if (dados.data[i].type === 'private_message' && (dados.data[i].from === user || dados.data[i].to === user)) {
       timeline.innerHTML += `<li class="mensagem private" data-test="message">
     <p>
       <span class="hora">(${dados.data[i].time}) </span
@@ -86,10 +86,33 @@ function enviarPorEnter(event) {
   }
 }
 
-
 function erro() {
   window.location.reload();
 }
+
+function mostrarMenu() {
+  document.querySelector('.overlay').classList.toggle("escondido");
+  const usuarios = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+  usuarios.then(listaUsers);
+}
+
+
+function listaUsers(dados) {
+  const lista = document.querySelector('nav lu');
+  lista.innerHTML = `<li class="ativo" data-test="all">
+  <div><ion-icon name="people"></ion-icon><p>Todos</p></div>
+  <ion-icon name="checkmark-outline" data-test="check"></ion-icon>
+</li >`;
+  for (let i = 0; i < dados.data.length; i++) {
+    lista.innerHTML += `<li data-test="participant"><div><ion-icon name="person-circle"></ion-icon><p>${dados.data[i].name}</p></div><ion-icon
+    name="checkmark-outline" data-test="check"
+  ></ion-icon></li>`;
+  }
+}
+
+document.querySelector('nav').onclick = function () {
+  event.stopPropagation();
+};
 
 user = prompt('Qual o seu nome?');
 entrarUser();
