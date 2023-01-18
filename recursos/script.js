@@ -55,7 +55,7 @@ function atualizarMensagens(dados) {
     </p>
     </div>`;
     } else {
-      timeline.innerHTML += `<div class="mensagem private">
+      timeline.innerHTML += `<div class="mensagem">
     <p>
       <span class="hora">(${dados.data[i].time}) </span
       ><span class="user">${dados.data[i].from} </span>para 
@@ -66,6 +66,27 @@ function atualizarMensagens(dados) {
   }
   timeline.lastChild.scrollIntoView();
 }
+
+function enviarMensagem() {
+  const msg = document.querySelector('input').value;
+  let mensagem = {
+    from: `${user}`,
+    to: `${touser}`,
+    text: msg,
+    type: typemsg
+  };
+  const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
+  promise.then(mensagens);
+
+}
+
+function enviarPorEnter(event) {
+  let x = event.code;
+  if (x === "Enter") {
+    enviarMensagem();
+  }
+}
+
 
 function erro() {
   window.location.reload();
