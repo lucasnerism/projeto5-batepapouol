@@ -3,7 +3,31 @@ let touser = 'Todos';
 let typemsg = 'message';
 let usuario;
 
+function entrarUser() {
+  usuario = {
+    name: user
+  };
+  const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
+  promise.then(checkUser);
+  promise.catch(falhaLogin);
+}
 
+function checkUser(dados) {
+  if (dados.data === "OK") {
+    checkStatus();
+    setInterval(checkStatus, 5000);
+  }
+}
+
+function falhaLogin() {
+  user = prompt('Já existe um usuário com esse nome, por favor escolha outro nome');
+  entrarUser();
+}
+
+
+function checkStatus() {
+  axios.post('https://mock-api.driven.com.br/api/v6/uol/status', usuario);
+}
 
 function mensagens() {
   const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
@@ -47,7 +71,7 @@ function erro() {
   window.location.reload();
 }
 
-
-
+user = prompt('Qual o seu nome?');
+entrarUser();
 mensagens();
 setInterval(mensagens, 300);
