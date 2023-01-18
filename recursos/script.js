@@ -22,6 +22,8 @@ function checkUser(dados) {
   setInterval(checkStatus, 5000);
   atualizarLista();
   setInterval(atualizarLista, 10000);
+  mensagens();
+  setInterval(mensagens, 3000);
   document.querySelector('.tela-login').classList.add('escondido');
 }
 
@@ -150,9 +152,3 @@ function listaUsers(dados) {
 document.querySelector('nav').onclick = function () {
   event.stopPropagation();
 };
-
-
-
-mensagens();
-
-setInterval(mensagens, 3000);
