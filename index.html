@@ -26,38 +26,16 @@
       ></ion-icon>
     </header>
     <main>
-      <div class="mensagem presenca">
-        <p>
-          <span class="hora">(09:21:45) </span
-          ><span class="user">João </span>entra na sala...
-        </p>
-      </div>
-      <div class="mensagem">
-        <p>
-          <span class="hora">(09:21:45) </span
-          ><span class="user">João </span>para&nbsp<span class="user"
-            >Todos: </span
-          >Bom dia
-        </p>
-      </div>
-      <div class="mensagem">
-        <p>
-          <span class="hora">(09:21:45) </span
-          ><span class="user">Maria </span>para
-          <span class="user">João: </span>Oi João :)
-        </p>
-      </div>
-      <div class="mensagem private">
-        <p>
-          <span class="hora">(09:21:45) </span
-          ><span class="user">João </span>reservadamente para
-          <span class="user">Maria: </span>Oi gatinha quer tc?
-        </p>
-      </div>
+      <lu> </lu>
     </main>
     <footer>
-      <input type="text" placeholder="Escreva aqui..." /><ion-icon
+      <input
+        type="text"
+        placeholder="Escreva aqui..."
+        onkeypress="enviarPorEnter(event)"
+      /><ion-icon
         name="paper-plane-outline"
+        onclick="enviarMensagem()"
       ></ion-icon>
     </footer>
     <script
@@ -68,6 +46,8 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./recursos/script.js"></script>
   </body>
 </html>
