@@ -32,7 +32,6 @@ function checkStatus() {
 function mensagens() {
   const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
   promise.then(atualizarMensagens);
-  promise.catch(erro);
 }
 
 function atualizarMensagens(dados) {
@@ -40,28 +39,28 @@ function atualizarMensagens(dados) {
 
   for (let i = 0; i < dados.data.length; i++) {
     if (dados.data[i].type === 'status') {
-      timeline.innerHTML += `<li class="mensagem presenca">
+      timeline.innerHTML += `<li class="mensagem presenca" data-test="message">
           <p>
             <span class="hora">(${dados.data[i].time}) </span
             ><span class="user">${dados.data[i].from} </span>${dados.data[i].text}
           </p>
         </li>`;
     } else if (dados.data[i].type === 'private_message') {
-      timeline.innerHTML += `<div class="mensagem private">
+      timeline.innerHTML += `<li class="mensagem private" data-test="message">
     <p>
       <span class="hora">(${dados.data[i].time}) </span
       ><span class="user">${dados.data[i].from} </span>reservadamente para 
       <span class="user">${dados.data[i].to}: </span>${dados.data[i].text}
     </p>
-    </div>`;
+    </li>`;
     } else {
-      timeline.innerHTML += `<div class="mensagem">
+      timeline.innerHTML += `<li class="mensagem" data-test="message">
     <p>
       <span class="hora">(${dados.data[i].time}) </span
       ><span class="user">${dados.data[i].from} </span>para 
       <span class="user">${dados.data[i].to}: </span>${dados.data[i].text}
     </p>
-    </div>`;
+    </li>`;
     }
   }
   timeline.lastChild.scrollIntoView();
@@ -77,7 +76,7 @@ function enviarMensagem() {
   };
   const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagem);
   promise.then(mensagens);
-
+  promise.catch(erro);
 }
 
 function enviarPorEnter(event) {
@@ -95,4 +94,4 @@ function erro() {
 user = prompt('Qual o seu nome?');
 entrarUser();
 mensagens();
-setInterval(mensagens, 300);
+setInterval(mensagens, 3000);
