@@ -31,7 +31,7 @@
         <nav>
           <h1>Escolha um contato<br />para enviar mensagem:</h1>
           <lu class="contato">
-            <li class="ativo" onclick="ativar(this)">
+            <li class="ativo" onclick="ativar(this,'contato')">
               <div><ion-icon name="people"></ion-icon>Todos</div>
               <ion-icon name="checkmark-outline"></ion-icon>
             </li>
@@ -41,13 +41,18 @@
           </lu>
           <h1>Escolha a visibilidade:</h1>
           <lu class="visibilidade">
-            <li class="ativo" data-test="public">
+            <li
+              class="ativo"
+              onclick="ativar(this, 'visibilidade')"
+              data-test="public"
+            >
               <div>
-                <ion-icon name="lock-open" data-test="check"></ion-icon>Público
+                <ion-icon name="lock-open" data-test="check"></ion-icon>
+                <p>Público</p>
               </div>
               <ion-icon name="checkmark-outline"></ion-icon>
             </li>
-            <li data-test="private">
+            <li onclick="ativar(this, 'visibilidade')" data-test="private">
               <div>
                 <ion-icon name="lock-open"></ion-icon>
                 <p>Reservadamente</p>

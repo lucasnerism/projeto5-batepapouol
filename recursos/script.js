@@ -41,7 +41,7 @@ function atualizarMensagens(dados) {
     if (dados.data[i].type === 'status') {
       timeline.innerHTML += `<li class="mensagem presenca" data-test="message">
           <p>
-            <span class="hora">(${dados.data[i].time})</span
+            <span class="hora">(${dados.data[i].time}) </span
             ><span class="user">${dados.data[i].from} </span>${dados.data[i].text}
           </p>
         </li>`;
@@ -69,8 +69,8 @@ function atualizarMensagens(dados) {
 function enviarMensagem() {
   const msg = document.querySelector('input').value;
   let mensagem = {
-    from: `${user}`,
-    to: `${touser}`,
+    from: user,
+    to: touser,
     text: msg,
     type: typemsg
   };
@@ -96,15 +96,35 @@ function mostrarMenu() {
   usuarios.then(listaUsers);
 }
 
+function ativar(esse, tipo) {
+  document.querySelector(`.${tipo} .ativo`).classList.remove('ativo');
+  esse.classList.add('ativo');
+  touser = document.querySelector('.contato .ativo p').innerHTML;
+  visibilidade(document.querySelector('.visibilidade .ativo p').innerHTML);
+  if (typemsg === "private_message") {
+    elemento.innerHTML = `Enviando para ${touser} (reservadamente)`;
+  } else {
+    elemento.innerHTML = "";
+  }
+}
+
+function visibilidade(tipo) {
+  if (tipo === "Reservadamente") {
+    typemsg = 'private_message';
+  } else {
+    typemsg = 'message';
+  }
+}
+
 
 function listaUsers(dados) {
   const lista = document.querySelector('nav lu');
-  lista.innerHTML = `<li class="ativo" data-test="all">
+  lista.innerHTML = `<li class="ativo" onclick="ativar(this, 'contato')" data-test="all">
   <div><ion-icon name="people"></ion-icon><p>Todos</p></div>
   <ion-icon name="checkmark-outline" data-test="check"></ion-icon>
 </li >`;
   for (let i = 0; i < dados.data.length; i++) {
-    lista.innerHTML += `<li data-test="participant"><div><ion-icon name="person-circle"></ion-icon><p>${dados.data[i].name}</p></div><ion-icon
+    lista.innerHTML += `<li onclick="ativar(this, 'contato')" data-test="participant"><div><ion-icon name="person-circle"></ion-icon><p>${dados.data[i].name}</p></div><ion-icon
     name="checkmark-outline" data-test="check"
   ></ion-icon></li>`;
   }
