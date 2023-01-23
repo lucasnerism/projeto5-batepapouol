@@ -218,6 +218,7 @@ li>ion-icon:last-of-type {
 
 .tela-login>p {
   position: relative;
+  text-align: center;
   top: 60px;
 }
 
@@ -257,4 +258,8 @@ footer input {
 
 input:focus {
   outline: none !important;
+}
+
+.cinza {
+  background-color: #696969;
 }

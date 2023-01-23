@@ -119,11 +119,26 @@ function ativar(esse, tipo) {
   document.querySelector(`.${tipo} .ativo`).classList.remove('ativo');
   esse.classList.add('ativo');
   touser = document.querySelector('.contato .ativo p').innerHTML;
+  liberarReservado();
   visibilidade(document.querySelector('.visibilidade .ativo p').innerHTML);
   if (typemsg === "private_message") {
     elemento.innerHTML = `Enviando para ${touser} (reservadamente)`;
   } else {
-    elemento.innerHTML = "";
+    elemento.innerHTML = `Enviando para ${touser}`;
+  }
+}
+
+function liberarReservado() {
+  const reservado = document.querySelector(".reservado");
+  const publico = document.querySelector(".publico");
+  if (document.querySelector(".contato .ativo p").innerHTML === "Todos") {
+    reservado.removeAttribute(onclick);
+    reservado.classList.add("cinza");
+    reservado.classList.remove("ativo");
+    publico.classList.add("ativo");
+  } else {
+    reservado.setAttribute("onclick", "ativar(this, 'visibilidade')");
+    reservado.classList.remove("cinza");
   }
 }
 
@@ -134,7 +149,6 @@ function visibilidade(tipo) {
     typemsg = 'message';
   }
 }
-
 
 function listaUsers(dados) {
   const lista = document.querySelector('nav lu');

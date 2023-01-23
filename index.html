@@ -44,14 +44,18 @@
           <p>Entrando...</p>
         </div>
       </div>
-      <div class="overlay escondido" onclick="mostrarMenu()">
+      <div
+        data-test="overlay"
+        class="overlay escondido"
+        onclick="mostrarMenu()"
+      >
         <nav>
           <h1>Escolha um contato<br />para enviar mensagem:</h1>
           <lu class="contato"> </lu>
           <h1>Escolha a visibilidade:</h1>
           <lu class="visibilidade">
             <li
-              class="ativo"
+              class="ativo publico"
               onclick="ativar(this, 'visibilidade')"
               data-test="public"
             >
@@ -61,7 +65,7 @@
               </div>
               <ion-icon name="checkmark-outline" data-test="check"></ion-icon>
             </li>
-            <li onclick="ativar(this, 'visibilidade')" data-test="private">
+            <li class="cinza reservado" data-test="private">
               <div>
                 <ion-icon name="lock-open"></ion-icon>
                 <p>Reservadamente</p>
